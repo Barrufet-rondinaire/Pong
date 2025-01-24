@@ -8,6 +8,8 @@ class Program
     private const int Amplada = 1024;
     private const int Altura = 768;
     private  static Window _finestra = null!;
+
+    private static Camp _camp = null!;
     
     static void Main()
     {
@@ -18,8 +20,9 @@ class Program
             // _finestra.BeginFullscreen();
             // _finestra.SetIcon(new Image("imatges/icon.ico"));
             _finestra.MoveToCenter();
-            
-            // TODO: Inicialitza el programa
+
+            _camp = new Camp(_finestra);
+            _camp.Carrega();
             
             var loop = GameLoop.Create(_finestra.Graphics, OnUpdate, 120);
             loop.Start();
@@ -28,6 +31,6 @@ class Program
 
     private static void OnUpdate(GraphicsContext gfx, float dt)
     {
-        // TODO: Bucle del programa
+        _camp.Pinta(gfx);
     }
 }
