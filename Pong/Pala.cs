@@ -12,9 +12,16 @@ public class Pala
         Posicio = posicioInicial;
         velocitat = velocitatInicial;
     }
-    public void Mou(Rectangle midaPantalla)
+    public void Mou(int direccio, Rectangle midaPantalla)
     {
+        if (direccio == 0) return;
         
+        var novaPosicio = Posicio;
+        novaPosicio.Y += direccio * velocitat;
+        if (midaPantalla.Contains(novaPosicio))
+        {
+            Posicio = novaPosicio;
+        }
     }
    
 }

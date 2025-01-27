@@ -31,6 +31,6 @@ class Program
 
     private static void OnUpdate(GraphicsContext gfx, float dt)
     {
-        _camp.Pinta(gfx);
+        _camp.Moure(gfx);
     }
 }
