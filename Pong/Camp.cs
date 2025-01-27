@@ -8,6 +8,7 @@ public class Camp
     private readonly Window _finestra;
     private readonly List<Pala> _pales = new();
     private Pilota _pilota;
+    private Marcador _marcador;
 
     private readonly Porteria[] _porteries = new Porteria[2];
 
@@ -40,15 +41,52 @@ public class Camp
             10,
             10);
         _pilota = new Pilota(posicioPilota, new Vector(1,0), 10 );
+        
+        _marcador = new Marcador(new Vector(_finestra.Width/2,10));
+        
     }
 
-    public void Moure(GraphicsContext gfx)
+    public void Juga(GraphicsContext gfx)
     {
         Mou();
+        Interaccio();
         Pinta(gfx);
     }
 
-    public void Mou()
+    private void Interaccio()
+    {
+        // Mirar si la pilota ha tocat ...
+        for (var index = 0; index < _porteries.Length; index++)
+        {
+            var porteria = _porteries[index];
+            if (_pilota.Posicio.Overlaps(porteria.Posicio))
+            {
+                // gol
+                _marcador.Gol((index+1)%2);
+
+                var novaDireccio = new Vector(1, 0);
+                if (index == 1)
+                {
+                    novaDireccio = new Vector(-1, 0);
+                }
+                _pilota.TornaAlCentre(novaDireccio);
+                return;
+            }
+        }
+
+        foreach (var pala in _pales)
+        {
+            if (_pilota.Posicio.Overlaps(pala.Posicio))
+            {
+                _pilota.Rebota(pala.Posicio);
+                return;
+            }
+        }
+        
+        
+    }
+
+    private void Mou()
     {
         var rectanglePantalla = new Rectangle(0, 0, _finestra.Width, _finestra.Height);
         // Moure pales
@@ -76,10 +114,13 @@ public class Camp
         // Mira si ha passat alguna cosa
 
     }
-    
-    public void Pinta(GraphicsContext gfx)
+
+    private void Pinta(GraphicsContext gfx)
     {
         gfx.Clear(Color.Black);
+        
+        gfx.DrawLine(new Vector(_finestra.Width/2, 0),
+            new Vector(_finestra.Width/2, _finestra.Height));
 
         foreach (var pala in _pales)
         {
@@ -87,6 +128,12 @@ public class Camp
         }
         
         gfx.DrawRect(_pilota.Posicio);
+        
+        gfx.DrawText(_marcador.Resultat(), 
+            _marcador.Posicio,
+            Font.Default,
+            100,
+            TextAlign.Center | TextAlign.Top);
     }
 
 }

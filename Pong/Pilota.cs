@@ -42,4 +42,20 @@ public class Pilota
             }
         }
     }
+
+    public void Rebota(Rectangle palaPosicio)
+    {
+        _direccio.X *= -1;
+        
+        var desplasament = 
+            (Posicio.Y + Posicio.Height - palaPosicio.Y)/(palaPosicio.Height - Posicio.Height);
+        var angle = 0.25f * Calc.Pi * (2 * desplasament -1);
+        _direccio.Y = Calc.Sin(angle);
+    }
+
+    public void TornaAlCentre(Vector novaDireccio)
+    {
+        Posicio = Centre;
+        _direccio = novaDireccio;
+    }
 }
