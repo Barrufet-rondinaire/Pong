@@ -12,12 +12,12 @@ public class Pala
         Posicio = posicioInicial;
         velocitat = velocitatInicial;
     }
-    public void Mou(int direccio, Rectangle midaPantalla)
+    public void Mou(Vector direccio, Rectangle midaPantalla)
     {
-        if (direccio == 0) return;
+        if (direccio.X == 0 && direccio.Y == 0) return;
         
         var novaPosicio = Posicio;
-        novaPosicio.Y += direccio * velocitat;
+        novaPosicio.Offset(direccio * velocitat);
         if (midaPantalla.Contains(novaPosicio))
         {
             Posicio = novaPosicio;

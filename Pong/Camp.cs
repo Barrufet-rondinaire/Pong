@@ -5,14 +5,20 @@ namespace Pong;
 
 public class Camp
 {
+    private const int LlargadaPala = 100;
+    private const int AmpladaPala = 15;
+    private const int VelocitatPala = 10;
+    private const int MidaPilota = 10;
+    private const int MitjaPilota = MidaPilota / 2;
+    
     private readonly Window _finestra;
-    private readonly List<Pala> _pales = new();
-    private Pilota _pilota;
-    private Marcador _marcador;
+    private readonly List<Pala> _pales = [];
+    private Pilota _pilota = null!;
+    private Marcador _marcador = null!;
 
     private readonly Porteria[] _porteries = new Porteria[2];
 
-    private Dictionary<string, Image> _imatges = new();
+    // private Dictionary<string, Image> _imatges = new();
 
     public Camp(Window finestra)
     {
@@ -30,16 +36,16 @@ public class Camp
         var posicioPorteria2 = new Rectangle(_finestra.Width - 10, 0, 10, _finestra.Height);
         _porteries[1] = new Porteria(posicioPorteria2);
         
-        var posicioPala1 = new Rectangle(26, (_finestra.Height-100)/2, 15, 100);
-        _pales.Add(new Pala(posicioPala1, 10));
-        var posicioPala2 = new Rectangle(_finestra.Width-39, (_finestra.Height-100)/2, 15, 100);
-        _pales.Add(new Pala(posicioPala2, 10));
+        var posicioPala1 = new Rectangle(26, (_finestra.Height-LlargadaPala)/2, AmpladaPala, LlargadaPala);
+        _pales.Add(new Pala(posicioPala1, VelocitatPala));
+        var posicioPala2 = new Rectangle(_finestra.Width-39, (_finestra.Height-LlargadaPala)/2, AmpladaPala, LlargadaPala);
+        _pales.Add(new Pala(posicioPala2, VelocitatPala));
 
         var posicioPilota = new Rectangle(
-            _finestra.Width / 2 - 5,
-            _finestra.Height / 2 - 5,
-            10,
-            10);
+            _finestra.Width / 2 - MitjaPilota,
+            _finestra.Height / 2 - MitjaPilota,
+            MidaPilota,
+            MidaPilota);
         _pilota = new Pilota(posicioPilota, new Vector(1,0), 10 );
         
         _marcador = new Marcador(new Vector(_finestra.Width/2,10));
@@ -90,25 +96,24 @@ public class Camp
     {
         var rectanglePantalla = new Rectangle(0, 0, _finestra.Width, _finestra.Height);
         // Moure pales
-        var movimentPala = new int[2];
+        var movimentPala = new Vector[2];
         if (Input.CheckKey(Key.Up, ButtonState.Down))
         {
-            movimentPala[0] = -1;
-            movimentPala[1] = -1;
+            movimentPala[0] = new Vector(0,-1);
         }
         if (Input.CheckKey(Key.Down, ButtonState.Down))
         {
-            movimentPala[0] = +1;
-            movimentPala[1] = +1;
-        }
-
-        var i = 0;
-        foreach (var pala in _pales)
-        {
-            pala.Mou(movimentPala[i], rectanglePantalla);
-            i++;
+            movimentPala[0] = new Vector(0,+1);
         }
         
+        movimentPala[1] = AutoJuga(_pales[1]);
+
+        for (var index = 0; index < _pales.Count; index++)
+        {
+            var pala = _pales[index];
+            pala.Mou(movimentPala[index], rectanglePantalla);
+        }
+
         // Moure Pilota
         _pilota.Mou(rectanglePantalla);
         // Mira si ha passat alguna cosa
@@ -136,4 +141,19 @@ public class Camp
             TextAlign.Center | TextAlign.Top);
     }
 
+    private Vector AutoJuga(Pala pala)
+    {
+        if (_pilota.Posicio.Bottom < pala.Posicio.Y)
+        {
+            return new Vector(0,-1);
+        }
+        
+        if (_pilota.Posicio.Y > pala.Posicio.Bottom)
+        {
+            return new Vector(0, +1);
+        }
+        
+        return new Vector(0, 0);
+    }
+    
 }
