@@ -70,10 +70,10 @@ public class Camp
                 // gol
                 _marcador.Gol((index+1)%2);
 
-                var novaDireccio = new Vector(1, 0);
+                var novaDireccio = new Vector(-1, 0);
                 if (index == 1)
                 {
-                    novaDireccio = new Vector(-1, 0);
+                    novaDireccio = new Vector(1, 0);
                 }
                 _pilota.TornaAlCentre(novaDireccio);
                 return;

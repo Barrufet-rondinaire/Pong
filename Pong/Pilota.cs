@@ -8,6 +8,7 @@ public class Pilota
     private Rectangle Centre;
     private Vector _direccio;
     private int _velocitat;
+    private int _velocitatInicial;
 
     public Pilota(Rectangle posicio, Vector direccio, int velocitat)
     {
@@ -15,6 +16,7 @@ public class Pilota
         Centre = posicio;
         _direccio = direccio;
         _velocitat = velocitat;
+        _velocitatInicial = velocitat;
     }
 
     public void Mou(Rectangle pantalla)
@@ -45,6 +47,7 @@ public class Pilota
 
     public void Rebota(Rectangle palaPosicio)
     {
+        _velocitat = _velocitatInicial;
         _direccio.X *= -1;
         
         var desplasament = 
@@ -57,5 +60,6 @@ public class Pilota
     {
         Posicio = Centre;
         _direccio = novaDireccio;
+        _velocitat = _velocitatInicial/2;
     }
 }
