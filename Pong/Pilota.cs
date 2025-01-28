@@ -54,6 +54,14 @@ public class Pilota
             (Posicio.Y + Posicio.Height - palaPosicio.Y)/(palaPosicio.Height - Posicio.Height);
         var angle = 0.25f * Calc.Pi * (2 * desplasament -1);
         _direccio.Y = Calc.Sin(angle);
+        
+        // BuGFIX: En alguns casos la pilota es queda penjada perquè rebota i 
+        //         surt de la pantalla. Això fa que no es mogui, torni a rebotar, 
+        //         etc.
+        //         La solució és fer que després de rebotar no xoqui amb la pala
+        var novaPosicio = Posicio;
+        novaPosicio.X = (Posicio.Center.X < palaPosicio.Center.X) ? palaPosicio.Left-1 : palaPosicio.Right+1;
+        Posicio = novaPosicio;
     }
 
     public void TornaAlCentre(Vector novaDireccio)
