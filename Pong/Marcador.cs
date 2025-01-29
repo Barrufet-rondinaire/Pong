@@ -2,14 +2,12 @@ using Heirloom;
 
 namespace Pong;
 
-public class Marcador
+public class Marcador: ObjectePantalla
 {
-    public Vector Posicio { get; }
     private readonly int[] _punts = new int[2];
 
-    public Marcador(Vector posicio)
+    public Marcador(Rectangle posicio) : base(posicio)
     {
-        Posicio = posicio;
         _punts[0] = 0;
         _punts[1] = 0;
     }

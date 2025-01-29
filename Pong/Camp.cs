@@ -48,7 +48,7 @@ public class Camp
             MidaPilota);
         _pilota = new Pilota(posicioPilota, new Vector(1,0), 10 );
         
-        _marcador = new Marcador(new Vector(_finestra.Width * 0.5f,10));
+        _marcador = new Marcador(new Rectangle(_finestra.Width * 0.5f,10, 10, 10));
         
     }
 
@@ -135,7 +135,7 @@ public class Camp
         gfx.DrawRect(_pilota.Posicio);
         
         gfx.DrawText(_marcador.Resultat(), 
-            _marcador.Posicio,
+            _marcador.Posicio.Center,
             Font.Default,
             100,
             TextAlign.Center | TextAlign.Top);

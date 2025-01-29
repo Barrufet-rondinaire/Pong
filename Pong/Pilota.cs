@@ -2,36 +2,18 @@ using Heirloom;
 
 namespace Pong;
 
-public class Pilota
+public class Pilota(Rectangle posicio, Vector direccio, int velocitat) : ObjectePantallaMou(posicio, velocitat)
 {
-    public Rectangle Posicio { get; private set; }
-    private readonly Rectangle _centre;
-    private Vector _direccio;
-    private int _velocitat;
-    private readonly int _velocitatInicial;
-
-    public Pilota(Rectangle posicio, Vector direccio, int velocitat)
-    {
-        Posicio = posicio;
-        _centre = posicio;
-        _direccio = direccio;
-        _velocitat = velocitat;
-        _velocitatInicial = velocitat;
-    }
+    private readonly Rectangle _centre = posicio;
+    private Vector _direccio = direccio;
+    private readonly int _velocitatInicial = velocitat;
 
     public void Mou(Rectangle pantalla)
     {
-        var novaPosicio = Posicio;
-
-        // novaPosicio.X += _direccio.X * _velocitat;
-        // novaPosicio.Y += _direccio.Y * _velocitat;
-        novaPosicio.Offset(_direccio * _velocitat);
-        if (pantalla.Contains(novaPosicio))
+        if (!base.Mou(_direccio, pantalla))
         {
-            Posicio = novaPosicio;
-        }
-        else
-        {
+            var novaPosicio = Posicio;
+            novaPosicio.Offset(_direccio * Velocitat);
             if (novaPosicio.Top < pantalla.Top ||
                 novaPosicio.Bottom > pantalla.Bottom)
             {
@@ -47,7 +29,7 @@ public class Pilota
 
     public void Rebota(Rectangle palaPosicio)
     {
-        _velocitat = _velocitatInicial;
+        Velocitat = _velocitatInicial;
         _direccio.X *= -1;
         
         var desplasament = 
@@ -68,6 +50,6 @@ public class Pilota
     {
         Posicio = _centre;
         _direccio = novaDireccio;
-        _velocitat = _velocitatInicial/2;
+        Velocitat = _velocitatInicial/2;
     }
 }
