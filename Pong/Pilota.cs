@@ -5,15 +5,15 @@ namespace Pong;
 public class Pilota
 {
     public Rectangle Posicio { get; private set; }
-    private Rectangle Centre;
+    private readonly Rectangle _centre;
     private Vector _direccio;
     private int _velocitat;
-    private int _velocitatInicial;
+    private readonly int _velocitatInicial;
 
     public Pilota(Rectangle posicio, Vector direccio, int velocitat)
     {
         Posicio = posicio;
-        Centre = posicio;
+        _centre = posicio;
         _direccio = direccio;
         _velocitat = velocitat;
         _velocitatInicial = velocitat;
@@ -66,7 +66,7 @@ public class Pilota
 
     public void TornaAlCentre(Vector novaDireccio)
     {
-        Posicio = Centre;
+        Posicio = _centre;
         _direccio = novaDireccio;
         _velocitat = _velocitatInicial/2;
     }

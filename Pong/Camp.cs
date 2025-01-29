@@ -36,19 +36,19 @@ public class Camp
         var posicioPorteria2 = new Rectangle(_finestra.Width - 10, 0, 10, _finestra.Height);
         _porteries[1] = new Porteria(posicioPorteria2);
         
-        var posicioPala1 = new Rectangle(26, (_finestra.Height-LlargadaPala)/2, AmpladaPala, LlargadaPala);
+        var posicioPala1 = new Rectangle(26, (_finestra.Height-LlargadaPala)*0.5f, AmpladaPala, LlargadaPala);
         _pales.Add(new Pala(posicioPala1, VelocitatPala));
-        var posicioPala2 = new Rectangle(_finestra.Width-39, (_finestra.Height-LlargadaPala)/2, AmpladaPala, LlargadaPala);
+        var posicioPala2 = new Rectangle(_finestra.Width-39, (_finestra.Height-LlargadaPala)*0.5f, AmpladaPala, LlargadaPala);
         _pales.Add(new Pala(posicioPala2, VelocitatPala));
 
         var posicioPilota = new Rectangle(
-            _finestra.Width / 2 - MitjaPilota,
-            _finestra.Height / 2 - MitjaPilota,
+            _finestra.Width * 0.5f - MitjaPilota,
+            _finestra.Height * 0.5f - MitjaPilota,
             MidaPilota,
             MidaPilota);
         _pilota = new Pilota(posicioPilota, new Vector(1,0), 10 );
         
-        _marcador = new Marcador(new Vector(_finestra.Width/2,10));
+        _marcador = new Marcador(new Vector(_finestra.Width * 0.5f,10));
         
     }
 
@@ -124,8 +124,8 @@ public class Camp
     {
         gfx.Clear(Color.Black);
         
-        gfx.DrawLine(new Vector(_finestra.Width/2, 0),
-            new Vector(_finestra.Width/2, _finestra.Height));
+        gfx.DrawLine(new Vector(_finestra.Width*0.5f, 0),
+            new Vector(_finestra.Width*0.5f, _finestra.Height));
 
         foreach (var pala in _pales)
         {
