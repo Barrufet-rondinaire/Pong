@@ -60,7 +60,7 @@ public class Pilota
         //         etc.
         //         La solució és fer que després de rebotar no xoqui amb la pala
         var novaPosicio = Posicio;
-        novaPosicio.X = (Posicio.Center.X < palaPosicio.Center.X) ? palaPosicio.Left-1 : palaPosicio.Right+1;
+        novaPosicio.X = (Posicio.Center.X < palaPosicio.Center.X) ? palaPosicio.Left-Posicio.Width : palaPosicio.Right+1;
         Posicio = novaPosicio;
     }
 
